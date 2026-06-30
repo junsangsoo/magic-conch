@@ -35,7 +35,18 @@ export default function ResultPage() {
     };
   }, [roomId]);
 
+  const [isHost, setIsHost] = useState(false);
+  useEffect(() => {
+    if (roomData) {
+      const localToken = localStorage.getItem(`magic_conch_host_${roomId}`);
+      if (localToken && localToken === roomData.hostToken) {
+        setIsHost(true);
+      }
+    }
+  }, [roomData, roomId]);
+
   const askMagicConch = async () => {
+    if (!isHost) return alert("방을 만든 사람만 소라고둥을 깨울 수 있어요!");
     if (responses.length === 0) return alert("아직 응답한 사람이 없습니다!");
     
     setAsking(true);
@@ -82,33 +93,40 @@ export default function ResultPage() {
             </div>
 
             <h3 style={{ marginBottom: '1rem', color: 'var(--primary)' }}>추천 식당 Top 3</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {roomData.result.places.map((place: any, i: number) => (
-                <a 
-                  key={i} 
-                  href={place.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  style={{ 
-                    display: 'block', 
-                    padding: '1.2rem', 
-                    background: 'white', 
-                    borderRadius: '12px',
-                    textDecoration: 'none',
-                    color: 'inherit',
-                    boxShadow: '0 4px 10px rgba(0,0,0,0.05)',
-                    transition: 'transform 0.2s',
-                    textAlign: 'left'
-                  }}
-                >
-                  <div style={{ fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '0.3rem' }}>
-                    {i + 1}. {place.name}
-                  </div>
-                  <div style={{ fontSize: '0.9rem', color: '#666', marginBottom: '0.3rem' }}>{place.category}</div>
-                  <div style={{ fontSize: '0.9rem', color: '#999' }}>{place.address}</div>
-                </a>
-              ))}
-            </div>
+            
+            {roomData.result.places && roomData.result.places.length > 0 ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {roomData.result.places.map((place: any, i: number) => (
+                  <a 
+                    key={i} 
+                    href={place.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ 
+                      display: 'block', 
+                      padding: '1.2rem', 
+                      background: 'white', 
+                      borderRadius: '12px',
+                      textDecoration: 'none',
+                      color: 'inherit',
+                      boxShadow: '0 4px 10px rgba(0,0,0,0.05)',
+                      transition: 'transform 0.2s',
+                      textAlign: 'left'
+                    }}
+                  >
+                    <div style={{ fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '0.3rem' }}>
+                      {i + 1}. {place.name}
+                    </div>
+                    <div style={{ fontSize: '0.9rem', color: '#666', marginBottom: '0.3rem' }}>{place.category}</div>
+                    <div style={{ fontSize: '0.9rem', color: '#999' }}>{place.address}</div>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <div style={{ padding: '2rem', background: '#fff', borderRadius: '12px', color: '#666' }}>
+                앗! 모두의 취향이 너무 독특해서 소라고둥도 적당한 식당을 찾지 못했어요.<br/>대신 아무 고깃집이나 가는 건 어떨까요? 😅
+              </div>
+            )}
             
             <button className="btn-secondary" style={{ marginTop: '2rem' }} onClick={() => router.push('/')}>
               처음으로 돌아가기
@@ -134,14 +152,20 @@ export default function ResultPage() {
               )}
             </div>
 
-            <button 
-              className="btn-magic animate-pulse" 
-              style={{ width: '100%' }} 
-              onClick={askMagicConch}
-              disabled={asking || responses.length === 0}
-            >
-              {asking ? "소라고둥이 고민 중... 🌀" : "모두 모였다면! 소라고둥에게 묻기 ✨"}
-            </button>
+            {isHost ? (
+              <button 
+                className="btn-magic animate-pulse" 
+                style={{ width: '100%' }} 
+                onClick={askMagicConch}
+                disabled={asking || responses.length === 0}
+              >
+                {asking ? "소라고둥이 고민 중... 🌀" : "모두 모였다면! 소라고둥에게 묻기 ✨"}
+              </button>
+            ) : (
+              <div style={{ padding: '1rem', background: 'rgba(0,0,0,0.05)', borderRadius: '12px', color: '#555' }}>
+                방장이 소라고둥을 깨울 때까지 기다려주세요! 🤫
+              </div>
+            )}
           </div>
         )}
       </div>

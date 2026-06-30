@@ -21,6 +21,19 @@ export default function RoomPage() {
   const [dislikes, setDislikes] = useState('');
   const [price, setPrice] = useState('상관없음');
 
+  useEffect(() => {
+    const checkRoomStatus = async () => {
+      const roomSnap = await getDoc(doc(db, 'rooms', roomId));
+      if (roomSnap.exists()) {
+        if (roomSnap.data().status === 'done') {
+          alert('이미 소라고둥이 결정을 내렸습니다! 결과 창으로 이동합니다.');
+          router.push(`/room/${roomId}/result`);
+        }
+      }
+    };
+    checkRoomStatus();
+  }, [roomId, router]);
+
   const copyLink = () => {
     const url = window.location.href;
     navigator.clipboard.writeText(url);
