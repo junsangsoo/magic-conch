@@ -114,6 +114,31 @@ export default function Home() {
                   </li>
                 </ul>
               </div>
+
+              <div style={{ marginTop: '1.5rem', padding: '1.5rem', background: 'rgba(155, 89, 182, 0.1)', borderRadius: '12px', fontSize: '0.85rem' }}>
+                <h4 style={{ margin: '0 0 1rem 0', color: 'var(--text-main)', fontSize: '1rem' }}>제 이야기가 더 궁금하다면...?</h4>
+                <p style={{ margin: '0 0 0.5rem 0', fontWeight: 'bold' }}>전상수_</p>
+                <p style={{ margin: '0 0 1rem 0' }}>
+                  Catholic Med.🩺<br/>
+                  대한민국 건국 이래 최초의 8월 졸업 본과5학년(7학년)<br/>
+                  작가를 꿈꾸며 시를 쓰는 정신과 지망생🦋<br/>
+                  지금이 저점매수 팔로우 타이밍🔮<br/>
+                  NVIDIA 이상의 위로가 되어드릴게요🍀
+                </p>
+                <p style={{ margin: '0 0 1rem 0' }}>
+                  🎥 Youtube: <a href="https://youtube.com/@david-neuro_psychiatry" target="_blank" rel="noreferrer" style={{color: 'var(--primary)', textDecoration: 'underline'}}>@david-neuro_psychiatry</a><br/>
+                  📸 Instagram: <a href="https://instagram.com/im_constant" target="_blank" rel="noreferrer" style={{color: 'var(--primary)', textDecoration: 'underline'}}>@im_constant</a><br/>
+                  🧵 Threads: <a href="https://threads.com/@im_constant" target="_blank" rel="noreferrer" style={{color: 'var(--primary)', textDecoration: 'underline'}}>@im_constant</a>
+                </p>
+                <p style={{ margin: '0 0 1rem 0' }}>
+                  ... 구독 팔로우 좋아요는 언제든 누구나 환영입니다!<br/>
+                  (당신이 소라동인회라면 DM, 메세지도 더욱이 환영!ㅎㅎ)
+                </p>
+                <p style={{ margin: 0, fontStyle: 'italic', fontWeight: 'bold', color: 'var(--primary)' }}>
+                  "당신의 지옥이 찾아왔을 때, 제 도움이 필요하다면<br/>
+                  그 좋아요의 값을 기꺼운 마음으로 치르고 싶습니다."
+                </p>
+              </div>
             </div>
           </div>
         </div>

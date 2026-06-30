@@ -74,6 +74,25 @@ export default function ResultPage() {
     }
   };
 
+  const shareResult = async () => {
+    const shareData = {
+      title: '마법의 소라고둥의 선택 🐚',
+      text: `우리의 밥약 장소가 정해졌어!\n\n소라고둥 왈: "${roomData.result.summary_reason}"\n\n결과 확인하기:\n`,
+      url: window.location.href
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(`${shareData.title}\n\n${shareData.text}\n${shareData.url}`);
+        alert('결과 링크가 클립보드에 복사되었습니다! 카톡이나 DM에 붙여넣기 해주세요.');
+      }
+    } catch (err) {
+      console.error('Error sharing:', err);
+    }
+  };
+
   if (!roomData) return <div className="container">로딩 중...</div>;
 
   const hasResult = roomData.status === "done" && roomData.result;
@@ -128,9 +147,14 @@ export default function ResultPage() {
               </div>
             )}
             
-            <button className="btn-secondary" style={{ marginTop: '2rem' }} onClick={() => router.push('/')}>
-              처음으로 돌아가기
-            </button>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+              <button className="btn-magic" style={{ flex: 1, marginTop: 0 }} onClick={shareResult}>
+                카톡/DM 공유하기 📤
+              </button>
+              <button className="btn-secondary" style={{ marginTop: 0 }} onClick={() => router.push('/')}>
+                처음으로
+              </button>
+            </div>
           </div>
         ) : (
           /* Waiting View */
