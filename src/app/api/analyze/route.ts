@@ -56,7 +56,9 @@ export async function POST(req: Request) {
     });
 
     if (!kakaoRes.ok) {
-      throw new Error("카카오 API 호출에 실패했습니다.");
+      const errText = await kakaoRes.text();
+      console.error("Kakao API Error Details:", errText);
+      throw new Error(`카카오 API 호출 실패: ${errText}`);
     }
 
     const kakaoData = await kakaoRes.json();
